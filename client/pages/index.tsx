@@ -1,17 +1,45 @@
-import React, { useEffect } from 'react';
-import { useAppStore } from '../stores/useAppStore';
+import React, { useEffect, useState } from 'react';
+import { useAppStore, useSocketStore } from '../stores/';
 import { Search } from '../components/Search';
 import { Canvas } from '../components/canvas';
 import { AirQualityInfo } from '../components/AirQualityInfo';
 import { Map } from '../components/map';
 import { ThemeSwitcher } from '../components/ThemeSwitcher';
 import { MapButton } from '../components/MapButton';
+import { io } from 'socket.io-client';
+
+const socket = io();
 
 function Home() {
     const { initState, location } = useAppStore();
+    const { users, setUsers } = useSocketStore();
     useEffect(() => {
         initState();
     }, []);
+
+    const [isConnected, setIsConnected] = useState(socket.connected);
+
+    useEffect(() => {
+        const onConnect = () => setIsConnected(true);
+        const onDisconnect = () => setIsConnected(false);
+        const onUsers = (users: any) => setUsers(users);
+
+        socket.on('connect', onConnect);
+        socket.on('disconnect', onDisconnect);
+        socket.on('users', onUsers);
+        return () => {
+            socket.off('connect', onConnect);
+            socket.off('disconnect', onDisconnect);
+            socket.off('users', onUsers);
+        };
+    }, []);
+
+    console.log(users);
+
+    useEffect(() => {
+        if (isConnected && location && location.lat && location.lon)
+            socket.emit('userAdd', { city: location.address.city, lat: location.lat, lon: location.lon });
+    }, [location, isConnected]);
 
     return (
         <div className="background-light900_dark200  relative h-screen overflow-hidden">

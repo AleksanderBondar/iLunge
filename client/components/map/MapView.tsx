@@ -1,13 +1,14 @@
 import React, { useMemo } from 'react';
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 import { Map as MapType } from 'leaflet';
-import { useAppStore, useMapStore } from '../../stores';
+import { useAppStore, useMapStore, useSocketStore } from '../../stores';
 import { pickGoodIcon } from './utils';
 import { Minimap } from './MiniMap';
 
 export const MapView = ({ setMap }: { setMap: (map: MapType) => void }) => {
     const { stations, selectedStation, airQualities, selectStation, location } = useAppStore();
     const { goTo, close } = useMapStore();
+    const { users } = useSocketStore();
 
     const dblclick = async (id: number) => {
         if (window.innerWidth < 640) close();
@@ -42,6 +43,13 @@ export const MapView = ({ setMap }: { setMap: (map: MapType) => void }) => {
                         </Popup>
                     </Marker>
                 )}
+                {users.map(({ city, lat, lon }) => (
+                    <Marker icon={pickGoodIcon('users')} opacity={0.8} position={[parseFloat(lat), parseFloat(lon)]}>
+                        <Popup>
+                            <span>{city}</span>
+                        </Popup>
+                    </Marker>
+                ))}
                 {Object.values(stations).map(station =>
                     station.map(({ id, gegrLat, gegrLon, stationName }) => {
                         const isSelected = selectedStation?.id === id;
@@ -73,7 +81,7 @@ export const MapView = ({ setMap }: { setMap: (map: MapType) => void }) => {
                 )}
             </MapContainer>
         ),
-        [stations, airQualities, selectedStation],
+        [stations, airQualities, selectedStation, users],
     );
     return <div className="h-full w-full bg-white">{display}</div>;
 };
