@@ -1,6 +1,6 @@
 import L from 'leaflet';
 
-export const pickGoodIcon = (mode: 'selected' | 'default' | number): L.Icon | undefined => {
+export const pickGoodIcon = (mode: 'selected' | 'default' | 'user' | number): L.Icon | undefined => {
     if (typeof mode === 'number') {
         switch (mode) {
             case 0:
@@ -46,21 +46,36 @@ export const pickGoodIcon = (mode: 'selected' | 'default' | number): L.Icon | un
                     popupAnchor: [0, -20],
                 });
         }
-    }
-    if (mode === `selected`) {
-        return L.icon({
-            iconUrl: `/assets/icons/markers/marker_selected.svg`,
-            iconSize: [20, 20],
-            iconAnchor: [10, 20],
-            popupAnchor: [0, -20],
-        });
-    }
-    if (mode === `default`) {
-        return L.icon({
-            iconUrl: `/assets/icons/markers/marker.svg`,
-            iconSize: [20, 20],
-            iconAnchor: [10, 20],
-            popupAnchor: [0, -20],
-        });
+    } else {
+        switch (mode) {
+            case `selected`:
+                return L.icon({
+                    iconUrl: `/assets/icons/markers/marker_selected.svg`,
+                    iconSize: [20, 20],
+                    iconAnchor: [10, 20],
+                    popupAnchor: [0, -20],
+                });
+            case `user`:
+                return L.icon({
+                    iconUrl: `/assets/icons/markers/marker_user.svg`,
+                    iconSize: [20, 20],
+                    iconAnchor: [10, 20],
+                    popupAnchor: [0, -20],
+                });
+            case `default`:
+                return L.icon({
+                    iconUrl: `/assets/icons/markers/marker.svg`,
+                    iconSize: [20, 20],
+                    iconAnchor: [10, 20],
+                    popupAnchor: [0, -20],
+                });
+            default:
+                return L.icon({
+                    iconUrl: `/assets/icons/markers/marker.svg`,
+                    iconSize: [20, 20],
+                    iconAnchor: [10, 20],
+                    popupAnchor: [0, -20],
+                });
+        }
     }
 };
