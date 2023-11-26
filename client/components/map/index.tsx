@@ -36,7 +36,7 @@ export const Map = () => {
                     transition={{ duration: 0.3, ease: 'easeInOut' }}
                     className={cx(
                         'fixed bottom-0 right-0',
-                        'border-light700_dark400 h-screen w-[40rem] border-l-[2px] shadow-2xl',
+                        'border-light700_dark400 h-screen w-screen border-l-[2px] shadow-2xl sm:w-[40rem]',
                     )}
                 >
                     <div className="relative h-full w-full flex-col">

@@ -17,14 +17,20 @@ export const ThemeSwitcher = () => {
             <MenubarMenu>
                 <MenubarTrigger className="cursor-pointer data-[state=open]:bg-light-900 focus:bg-light-900 focus-visible:outline-none dark:data-[state=open]:bg-dark-200 dark:focus:bg-dark-200">
                     {mode === 'light' ? (
-                        <img src={`/assets/icons/sun.svg`} alt="Sun" height={20} width={20} className="active-theme" />
+                        <img
+                            src={`/assets/icons/sun.svg`}
+                            alt="Sun"
+                            height={24}
+                            width={24}
+                            className="active-theme min-w-6 min-h-6"
+                        />
                     ) : (
                         <img
                             src={`/assets/icons/moon.svg`}
                             alt="Moon"
-                            height={20}
-                            width={20}
-                            className="active-theme"
+                            height={24}
+                            width={24}
+                            className="active-theme min-w-6 min-h-6"
                         />
                     )}
                 </MenubarTrigger>
