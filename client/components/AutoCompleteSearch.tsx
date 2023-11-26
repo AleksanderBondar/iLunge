@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useAppStore } from '../stores/useAppStore';
 import { cx } from '../utils';
+import { X } from 'lucide-react';
 
 export const AutoCompleteSearch = () => {
     const { searchResults, selectedStation, selectStation, initSearch, searchValue, setSearchValue } = useAppStore();
@@ -32,6 +33,14 @@ export const AutoCompleteSearch = () => {
 
     return (
         <div className="relative">
+            <X
+                className="text-light-700_dark200 absolute right-2 top-1/2 z-10 -translate-y-1/2 cursor-pointer"
+                onClick={() => {
+                    setSearchValue(null);
+                    selectStation(null);
+                }}
+            />
+
             <input
                 value={searchValue || ''}
                 ref={inputRef}
@@ -49,6 +58,7 @@ export const AutoCompleteSearch = () => {
                     isSearchOpen && 'rounded-b-none',
                 )}
             />
+
             <div
                 className={cx(
                     'absolute top-[100%] grid max-h-[24rem] w-full  transition-all duration-700 ease-in-out',

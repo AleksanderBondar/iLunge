@@ -19,7 +19,7 @@ type AppStore = {
 
     initState: () => Promise<void>;
     setMode: (mode: string) => void;
-    selectStation: (id: number) => void;
+    selectStation: (id: number | null) => void;
     setSearchValue: (value: string | null) => void;
     initSearch: () => void;
     setSearch: (search: string) => void;
@@ -88,7 +88,7 @@ export const useAppStore = create<AppStore>()((set, get) => {
 
     const selectStation = async (id: number | null) => {
         if (!id) {
-            set({ selectedStation: null });
+            set({ selectedStation: null, airQuality: null });
             return;
         }
         const stations = get().stations;

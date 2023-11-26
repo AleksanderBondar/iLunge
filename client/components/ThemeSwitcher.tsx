@@ -2,11 +2,12 @@ import React from 'react';
 import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger } from './ui/Menubar';
 import { useAppStore } from '../stores/useAppStore';
 import { cx } from '../utils';
+import { Moon, MoonIcon, Settings, Sun, SunMoon } from 'lucide-react';
 
 const themes = [
-    { value: 'light', label: 'Light', icon: `/assets/icons/sun.svg` },
-    { value: 'dark', label: 'Dark', icon: `/assets/icons/moon.svg` },
-    { value: 'system', label: 'System', icon: `/assets/icons/computer.svg` },
+    { value: 'light', label: 'Light', Icon: <Sun /> },
+    { value: 'dark', label: 'Dark', Icon: <MoonIcon /> },
+    { value: 'system', label: 'System', icon: <Settings /> },
 ];
 
 export const ThemeSwitcher = () => {
@@ -16,47 +17,32 @@ export const ThemeSwitcher = () => {
         <Menubar className="flex border-none bg-transparent shadow-none">
             <MenubarMenu>
                 <MenubarTrigger className="cursor-pointer data-[state=open]:bg-light-900 focus:bg-light-900 focus-visible:outline-none dark:data-[state=open]:bg-dark-200 dark:focus:bg-dark-200">
-                    {mode === 'light' ? (
-                        <img
-                            src={`/assets/icons/sun.svg`}
-                            alt="Sun"
-                            height={24}
-                            width={24}
-                            className="active-theme min-w-6 min-h-6"
-                        />
-                    ) : (
-                        <img
-                            src={`/assets/icons/moon.svg`}
-                            alt="Moon"
-                            height={24}
-                            width={24}
-                            className="active-theme min-w-6 min-h-6"
-                        />
-                    )}
+                    <SunMoon color={mode === 'light' ? '#212734' : '#DCE3F1'} className="text-dark100_light900" />
                 </MenubarTrigger>
                 <MenubarContent className="text-light-700_dark200 absolute right-[-3rem] mt-3 min-w-[120px] rounded border bg-light-800 py-2 dark:border-dark-400 dark:bg-dark-300">
-                    {themes.map(item => (
+                    {themes.map(({ icon, label, value }) => (
                         <MenubarItem
                             className="flex cursor-pointer items-center gap-4 px-2.5 py-2 focus:bg-light-850 focus-visible:outline-none dark:focus:bg-dark-400"
-                            key={item.value}
+                            key={value}
                             onClick={() => {
-                                setMode(item.value);
+                                setMode(value);
                             }}
                         >
-                            <img
-                                src={item.icon}
-                                alt={item.value}
-                                height={16}
-                                width={16}
-                                className={cx(mode === item.value) && 'active-theme'}
-                            />
+                            {/* wiem ze chujowo to jest zrobione, ale nie moge zmappowac przez arraya, jest pozno, do ogarniecia jutro */}
+                            {value === 'light' ? (
+                                <Sun color={mode === 'light' ? '#212734' : '#7B8EC8'} />
+                            ) : value === 'dark' ? (
+                                <Moon color={mode === 'light' ? '#212734' : '#7B8EC8'} />
+                            ) : (
+                                <Settings color={mode === 'light' ? '#212734' : '#7B8EC8'} />
+                            )}
                             <p
                                 className={cx(
                                     'body-semibold text-dark100_light900 text-light-500',
-                                    mode === item.value && 'text-primary-500',
+                                    mode === value && 'text-primary-500',
                                 )}
                             >
-                                {item.label}
+                                {label}
                             </p>
                         </MenubarItem>
                     ))}

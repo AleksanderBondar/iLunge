@@ -1,19 +1,19 @@
-import React, { useRef } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import * as THREE from 'three';
-import { ScrollControls, useScroll } from '@react-three/drei';
-import { Canvas2 } from '../../components/canvas2';
+import React from 'react';
+
+import { AboutCanvas } from '../../components/aboutCanvas';
+import { ThemeSwitcher } from '../../components/ThemeSwitcher';
 
 HTMLCanvasElement;
 function About() {
-    const objectsDistance = 4;
-
     return (
         <>
-            <section className=" flex h-screen w-full flex-col justify-center   pl-80 text-white ">
+            <div className="fixed right-6 top-6">
+                <ThemeSwitcher />
+            </div>
+            <section className=" text-light-700_dark200 flex h-screen w-full flex-col justify-center  pl-80  ">
                 <div className=" w-1/2">
                     <h1 className="mb-8 text-5xl">Smartwach</h1>
-                    <p>
+                    <p className="text-base">
                         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aperiam, soluta! Explicabo, placeat
                         sed. Labore perspiciatis nobis eveniet accusamus itaque repudiandae in distinctio voluptatibus,
                         similique officiis? Facilis accusantium culpa suscipit modi. Odit autem eum tenetur ducimus
@@ -42,10 +42,10 @@ function About() {
                     </p>
                 </div>
             </section>
-            <section className=" flex h-screen  w-full flex-col   items-end justify-center pr-80    text-white">
+            <section className="  text-light-700_dark200 flex  h-[100vh] w-full   flex-col items-end justify-center pr-80   text-white">
                 <div className="w-1/2">
                     <h1 className=" mb-8 text-5xl">Mobile App</h1>
-                    <p>
+                    <p className="text-base">
                         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aperiam, soluta! Explicabo, placeat
                         sed. Labore perspiciatis nobis eveniet accusamus itaque repudiandae in distinctio voluptatibus,
                         similique officiis? Facilis accusantium culpa suscipit modi. Odit autem eum tenetur ducimus
@@ -75,7 +75,7 @@ function About() {
                 </div>
             </section>
 
-            <Canvas2 />
+            <AboutCanvas />
         </>
     );
 }

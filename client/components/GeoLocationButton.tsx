@@ -1,4 +1,4 @@
-import { PinIcon, PinOff } from 'lucide-react';
+import { LocateFixed } from 'lucide-react';
 import React from 'react';
 import { useAppStore } from '../stores';
 import { cx, requestGeolocation } from '../utils';
@@ -18,7 +18,7 @@ export const GeoLocalizationButton = () => {
                         transition={{ duration: 0.2 }}
                         className={cx('text-green-500')}
                     >
-                        <PinIcon />
+                        <LocateFixed />
                     </motion.div>
                 ) : (
                     <motion.div
@@ -28,7 +28,7 @@ export const GeoLocalizationButton = () => {
                         transition={{ duration: 0.2 }}
                         className={cx('text-red-500')}
                     >
-                        <PinOff />
+                        <LocateFixed />
                     </motion.div>
                 )}
             </AnimatePresence>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { AutoCompleteSearch } from './AutoCompleteSearch';
-import { MapButton } from './MapButton';
+
 import { GeoLocalizationButton } from './GeoLocationButton';
 import { ThemeSwitcher } from './ThemeSwitcher';
 import { RotateButton } from './RotateButton';
@@ -12,19 +12,14 @@ export const Search = () => {
                 <div className="flex w-full flex-col-reverse items-center justify-center gap-4 sm:flex-row sm:gap-8">
                     <div className="flex justify-between gap-4">
                         <div className="flex gap-4">
-                            <GeoLocalizationButton />
-                            {/* <MapButton /> */}
                             <RotateButton />
-                        </div>
-                        <div className="sm:hidden">
-                            <ThemeSwitcher />
                         </div>
                     </div>
                     <div className="w-full max-w-[300px] ">
                         <AutoCompleteSearch />
                     </div>
                     <div className="hidden sm:block">
-                        <ThemeSwitcher />
+                        <GeoLocalizationButton />
                     </div>
                 </div>
             </div>

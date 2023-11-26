@@ -5,8 +5,9 @@ import { airQualityColors } from '../constans';
 
 export const AirQualityInfo = () => {
     const { airQuality, qualityLoading } = useAppStore();
+    console.log(airQuality);
     return (
-        <div className="text-light-700_dark200 absolute left-2 top-4 top-[50%] flex flex-col gap-2 rounded-xl px-6 py-4 text-sm lg:left-10 lg:-translate-y-1/2">
+        <div className="text-light-700_dark200 absolute left-2 top-4 flex flex-col gap-2 rounded-xl px-6 py-4 text-sm lg:left-10 lg:top-[50%] lg:-translate-y-1/2">
             <h2 className="text-base">Jakość powietrza</h2>
             {qualityLoading || !airQuality ? (
                 <AirQualityLoader loading={qualityLoading} />

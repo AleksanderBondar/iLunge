@@ -42,7 +42,7 @@ export const Model = () => {
     });
 
     useEffect(() => {
-        if ((airQuality?.st?.indexLevel?.id ?? 0) < 0)
+        if ((airQuality?.st?.indexLevel?.id ?? -1) < 0)
             setColors(p => ({
                 old: mode === 'light' ? '#212734' : '#fff',
                 new: mode === 'light' ? '#212734' : '#fff',
