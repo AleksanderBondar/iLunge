@@ -4,6 +4,7 @@ import { createServer } from 'vite';
 import viteConfig from '../vite.config.js';
 import { API } from './api/index.js';
 import { ROUTES } from './routes/index.js';
+import { IO } from './api/io.js';
 
 const router = Router({ strict: true });
 
@@ -23,6 +24,9 @@ router.use('*', (_, res) => {
 
 const app = express();
 app.use(router);
-app.listen(3000, () => {
+
+const server = app.listen(3000, () => {
     console.log(`Listening on port http://localhost:3000...`);
 });
+
+IO(server);

@@ -1,6 +1,6 @@
 import L from 'leaflet';
 
-export const pickGoodIcon = (mode: 'selected' | 'default' | 'user' | number): L.Icon | undefined => {
+export const pickGoodIcon = (mode: 'selected' | 'default' | 'user' | 'users' | number): L.Icon | undefined => {
     if (typeof mode === 'number') {
         switch (mode) {
             case 0:
@@ -45,6 +45,13 @@ export const pickGoodIcon = (mode: 'selected' | 'default' | 'user' | number): L.
                     iconAnchor: [10, 20],
                     popupAnchor: [0, -20],
                 });
+            default:
+                return L.icon({
+                    iconUrl: `/assets/icons/markers/marker.svg`,
+                    iconSize: [20, 20],
+                    iconAnchor: [10, 20],
+                    popupAnchor: [0, -20],
+                });
         }
     } else {
         switch (mode) {
@@ -58,6 +65,13 @@ export const pickGoodIcon = (mode: 'selected' | 'default' | 'user' | number): L.
             case `user`:
                 return L.icon({
                     iconUrl: `/assets/icons/markers/marker_user.svg`,
+                    iconSize: [20, 20],
+                    iconAnchor: [10, 20],
+                    popupAnchor: [0, -20],
+                });
+            case `users`:
+                return L.icon({
+                    iconUrl: `/assets/icons/markers/marker_users.svg`,
                     iconSize: [20, 20],
                     iconAnchor: [10, 20],
                     popupAnchor: [0, -20],
