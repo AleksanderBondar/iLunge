@@ -12,7 +12,7 @@ const socket = io();
 
 function Home() {
     const { initState, location } = useAppStore();
-    const { users, setUsers } = useSocketStore();
+    const { setUsers } = useSocketStore();
     useEffect(() => {
         initState();
     }, []);
@@ -22,7 +22,7 @@ function Home() {
     useEffect(() => {
         const onConnect = () => setIsConnected(true);
         const onDisconnect = () => setIsConnected(false);
-        const onUsers = (users: any) => setUsers(users);
+        const onUsers = users => setUsers(users);
 
         socket.on('connect', onConnect);
         socket.on('disconnect', onDisconnect);
@@ -34,11 +34,15 @@ function Home() {
         };
     }, []);
 
-    console.log(users);
-
     useEffect(() => {
-        if (isConnected && location && location.lat && location.lon)
-            socket.emit('userAdd', { city: location.address.city, lat: location.lat, lon: location.lon });
+        if (isConnected && location && location.lat && location.lon) {
+            const data = {
+                city: location.address.city,
+                lat: location.lat,
+                lon: location.lon,
+            };
+            socket.emit('userAdd', data);
+        }
     }, [location, isConnected]);
 
     return (

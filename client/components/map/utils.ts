@@ -45,6 +45,13 @@ export const pickGoodIcon = (mode: 'selected' | 'default' | 'user' | 'users' | n
                     iconAnchor: [10, 20],
                     popupAnchor: [0, -20],
                 });
+            default:
+                return L.icon({
+                    iconUrl: `/assets/icons/markers/marker.svg`,
+                    iconSize: [20, 20],
+                    iconAnchor: [10, 20],
+                    popupAnchor: [0, -20],
+                });
         }
     } else {
         switch (mode) {
