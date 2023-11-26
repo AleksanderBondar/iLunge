@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useAppStore, useSocketStore } from '../stores/';
 import { Search } from '../components/Search';
 import { LungCanvas } from '../components/lungCanvas';
@@ -12,26 +12,26 @@ const socket = io();
 
 function Home() {
     const { initState, location } = useAppStore();
-    const { setUsers } = useSocketStore();
+    const { setUsers, setConnected, isConnected } = useSocketStore();
     useEffect(() => {
         initState();
-    }, []);
 
-    const [isConnected, setIsConnected] = useState(socket.connected);
+        try {
+            const onConnect = () => setConnected(true);
+            const onDisconnect = () => setConnected(false);
+            const onUsers = users => setUsers(users);
 
-    useEffect(() => {
-        const onConnect = () => setIsConnected(true);
-        const onDisconnect = () => setIsConnected(false);
-        const onUsers = users => setUsers(users);
-
-        socket.on('connect', onConnect);
-        socket.on('disconnect', onDisconnect);
-        socket.on('users', onUsers);
-        return () => {
-            socket.off('connect', onConnect);
-            socket.off('disconnect', onDisconnect);
-            socket.off('users', onUsers);
-        };
+            socket.on('connect', onConnect);
+            socket.on('disconnect', onDisconnect);
+            socket.on('users', onUsers);
+            return () => {
+                socket.off('connect', onConnect);
+                socket.off('disconnect', onDisconnect);
+                socket.off('users', onUsers);
+            };
+        } catch (error) {
+            setConnected(false);
+        }
     }, []);
 
     useEffect(() => {
