@@ -7,13 +7,17 @@ import { Minimap } from './MiniMap';
 
 export const MapView = ({ setMap }: { setMap: (map: MapType) => void }) => {
     const { stations, selectedStation, airQualities, selectStation, location } = useAppStore();
-    const { goTo } = useMapStore();
+    const { goTo, close } = useMapStore();
 
     const dblclick = async (id: number) => {
+        if (window.innerWidth < 640) close();
         selectStation(id);
         await goTo('station');
     };
-    const onButtonClick = (id: number) => selectStation(id);
+    const onButtonClick = (id: number) => {
+        if (window.innerWidth < 640) close();
+        selectStation(id);
+    };
 
     const display = useMemo(
         () => (
