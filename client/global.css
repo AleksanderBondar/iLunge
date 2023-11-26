@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.background-light800_dark300 {
+    @apply bg-light-800 dark:bg-dark-300 !important;
+}
+.background-light900_dark200 {
+    @apply bg-light-900 dark:bg-dark-200 !important;
+}
+.background-light700_dark400 {
+    @apply bg-light-700 dark:bg-dark-400 !important;
+}
+
+.border-light700_dark400 {
+    @apply border-light-700 dark:border-dark-400 !important;
+}
+.text-light-700_dark200 {
+    @apply text-dark-200 dark:text-light-700 !important;
+}
+.hover-light-700_dark-400 {
+    @apply hover:bg-light-700 hover:dark:bg-dark-400 !important;
+}
+
+body {
+    font-size: 62.5%;
+}
+
+:root {
+    --leaflet-tile-filter: brightness(0.6) invert(1) contrast(3) hue-rotate(200deg) saturate(0.3) brightness(0.7) !important;
+}
