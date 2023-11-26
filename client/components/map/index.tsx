@@ -14,7 +14,7 @@ export const Map = () => {
 
     useEffect(() => {
         const listener = (e: MouseEvent) => {
-            const button = document.getElementById('map-close-button');
+            const button = document.getElementById('container');
             if (button && !button.contains(e.target as Node) && !ref.current?.contains(e.target as Node)) {
                 close();
             }

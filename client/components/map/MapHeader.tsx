@@ -5,7 +5,7 @@ import { X as Cross } from 'lucide-react';
 
 export const MapHeader = ({ map }: { map: Map }) => {
     const { selectedStation, stations, location } = useAppStore();
-    const { close, moveMap } = useMapStore();
+    const { moveMap } = useMapStore();
     const [position, setPosition] = useState(() => map.getCenter());
 
     const onClick = useCallback(() => {
@@ -80,9 +80,9 @@ export const MapHeader = ({ map }: { map: Map }) => {
                     </button>
                 </div>
             </div>
-            <button onClick={close}>
+            {/* <button onClick={close}>
                 <Cross className="h-6 w-6" />
-            </button>
+            </button> */}
         </div>
     );
 };

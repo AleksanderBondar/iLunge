@@ -1,9 +1,81 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
+import * as THREE from 'three';
+import { ScrollControls, useScroll } from '@react-three/drei';
+import { Canvas2 } from '../../components/canvas2';
 
+HTMLCanvasElement;
 function About() {
+    const objectsDistance = 4;
+
     return (
         <>
-            <h1>About</h1>
+            <section className=" flex h-screen w-full flex-col justify-center   pl-80 text-white ">
+                <div className=" w-1/2">
+                    <h1 className="mb-8 text-5xl">Smartwach</h1>
+                    <p>
+                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aperiam, soluta! Explicabo, placeat
+                        sed. Labore perspiciatis nobis eveniet accusamus itaque repudiandae in distinctio voluptatibus,
+                        similique officiis? Facilis accusantium culpa suscipit modi. Odit autem eum tenetur ducimus
+                        odio. Tempore obcaecati dicta exercitationem, animi doloribus aperiam nulla quidem, recusandae
+                        tempora sit rem ullam at. Quos sequi cupiditate nam eius culpa quibusdam, cum dolorum. Veritatis
+                        illum omnis odio, quod voluptatum enim quia amet doloremque aliquid velit architecto modi dolore
+                        doloribus provident saepe illo nihil, veniam ipsa eius! Deserunt dolorem obcaecati dignissimos,
+                        recusandae vitae repellat. Culpa cum voluptatum vel dolorem temporibus blanditiis similique
+                        cupiditate facere impedit neque? Aliquam necessitatibus maiores, dignissimos architecto
+                        officiis, animi perspiciatis sapiente illo nulla consequatur cum. Quibusdam nulla at dignissimos
+                        id! Perferendis praesentium, optio fuga commodi quia esse non quae reiciendis maiores provident.
+                        Non impedit dignissimos asperiores doloremque sint ullam reprehenderit maiores sunt vero? Nihil
+                        nobis doloremque nesciunt facere quibusdam. Accusamus? Accusamus quas maxime perspiciatis harum
+                        praesentium veritatis et, fuga excepturi animi soluta magnam voluptate ipsam? Ipsum temporibus
+                        vero a incidunt ad, culpa exercitationem cum harum tenetur soluta illum doloribus voluptates.
+                        Ipsum fuga eius quas odit excepturi earum suscipit dolor, qui eos, vitae aliquam odio sint ex
+                        aut quos error. Dignissimos, accusantium a eius corporis maiores distinctio odio commodi
+                        consequuntur labore. Inventore accusantium temporibus, magni modi quam quia libero, quisquam
+                        itaque laboriosam rerum, doloribus praesentium officiis ad nisi necessitatibus exercitationem
+                        facilis nihil fugiat impedit saepe adipisci tempore! Perspiciatis dicta id sunt? Saepe quos
+                        ducimus, natus numquam esse repudiandae perferendis iure mollitia nemo. Aperiam omnis eligendi
+                        eos consequuntur quidem ratione fugiat expedita obcaecati nulla tempore, sequi quo maiores
+                        voluptatum porro. Tempore, aliquid. Totam, ut? Dignissimos hic, eaque explicabo obcaecati
+                        cupiditate at, quae quod quam aliquam nisi esse quidem commodi iusto tempora asperiores nihil
+                        magnam corrupti, nemo quasi. Pariatur vero iure voluptas repudiandae!
+                    </p>
+                </div>
+            </section>
+            <section className=" flex h-screen  w-full flex-col   items-end justify-center pr-80    text-white">
+                <div className="w-1/2">
+                    <h1 className=" mb-8 text-5xl">Mobile App</h1>
+                    <p>
+                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aperiam, soluta! Explicabo, placeat
+                        sed. Labore perspiciatis nobis eveniet accusamus itaque repudiandae in distinctio voluptatibus,
+                        similique officiis? Facilis accusantium culpa suscipit modi. Odit autem eum tenetur ducimus
+                        odio. Tempore obcaecati dicta exercitationem, animi doloribus aperiam nulla quidem, recusandae
+                        tempora sit rem ullam at. Quos sequi cupiditate nam eius culpa quibusdam, cum dolorum. Veritatis
+                        illum omnis odio, quod voluptatum enim quia amet doloremque aliquid velit architecto modi dolore
+                        doloribus provident saepe illo nihil, veniam ipsa eius! Deserunt dolorem obcaecati dignissimos,
+                        recusandae vitae repellat. Culpa cum voluptatum vel dolorem temporibus blanditiis similique
+                        cupiditate facere impedit neque? Aliquam necessitatibus maiores, dignissimos architecto
+                        officiis, animi perspiciatis sapiente illo nulla consequatur cum. Quibusdam nulla at dignissimos
+                        id! Perferendis praesentium, optio fuga commodi quia esse non quae reiciendis maiores provident.
+                        Non impedit dignissimos asperiores doloremque sint ullam reprehenderit maiores sunt vero? Nihil
+                        nobis doloremque nesciunt facere quibusdam. Accusamus? Accusamus quas maxime perspiciatis harum
+                        praesentium veritatis et, fuga excepturi animi soluta magnam voluptate ipsam? Ipsum temporibus
+                        vero a incidunt ad, culpa exercitationem cum harum tenetur soluta illum doloribus voluptates.
+                        Ipsum fuga eius quas odit excepturi earum suscipit dolor, qui eos, vitae aliquam odio sint ex
+                        aut quos error. Dignissimos, accusantium a eius corporis maiores distinctio odio commodi
+                        consequuntur labore. Inventore accusantium temporibus, magni modi quam quia libero, quisquam
+                        itaque laboriosam rerum, doloribus praesentium officiis ad nisi necessitatibus exercitationem
+                        facilis nihil fugiat impedit saepe adipisci tempore! Perspiciatis dicta id sunt? Saepe quos
+                        ducimus, natus numquam esse repudiandae perferendis iure mollitia nemo. Aperiam omnis eligendi
+                        eos consequuntur quidem ratione fugiat expedita obcaecati nulla tempore, sequi quo maiores
+                        voluptatum porro. Tempore, aliquid. Totam, ut? Dignissimos hic, eaque explicabo obcaecati
+                        cupiditate at, quae quod quam aliquam nisi esse quidem commodi iusto tempora asperiores nihil
+                        magnam corrupti, nemo quasi. Pariatur vero iure voluptas repudiandae!
+                    </p>
+                </div>
+            </section>
+
+            <Canvas2 />
         </>
     );
 }

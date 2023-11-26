@@ -4,6 +4,8 @@ import { Search } from '../components/Search';
 import { Canvas } from '../components/canvas';
 import { AirQualityInfo } from '../components/AirQualityInfo';
 import { Map } from '../components/map';
+import { ThemeSwitcher } from '../components/ThemeSwitcher';
+import { MapButton } from '../components/MapButton';
 
 function Home() {
     const { initState, location } = useAppStore();
@@ -17,6 +19,10 @@ function Home() {
             <Search />
             <AirQualityInfo />
             <Map />
+            <div id={'container'} className="z-100 absolute right-6 top-6 flex gap-2 ">
+                <MapButton />
+                <ThemeSwitcher />
+            </div>
         </div>
     );
 }
