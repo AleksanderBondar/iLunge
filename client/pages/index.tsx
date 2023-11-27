@@ -12,17 +12,9 @@ import { AirQuality, Stations } from '../../types/front';
 declare global {
     interface Window {
         __INITIAL_DATA__: {
-            context: { iframe: boolean };
-            data: {
-                stations: {
-                    timestamp: number;
-                    stations: Stations;
-                };
-                airQualities: {
-                    timestamp: number;
-                    qualities: Record<string, AirQuality>;
-                };
-            };
+            context: { iframe: boolean; language: string };
+            stations: { timestamp: number; stations: Stations };
+            airQualities: { timestamp: number; qualities: Record<string, AirQuality> };
         };
     }
 }
@@ -36,7 +28,7 @@ function Home() {
     const [usersMousePositions, setUsersMousePositions] = React.useState<{ id: string; x: number; y: number }[]>([]);
 
     useEffect(() => {
-        initState(window?.__INITIAL_DATA__?.data);
+        initState(window?.__INITIAL_DATA__);
 
         try {
             const onConnect = () => setConnected(true);
