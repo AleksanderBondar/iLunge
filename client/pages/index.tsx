@@ -11,6 +11,7 @@ import { io } from 'socket.io-client';
 const socket = io();
 
 function Home() {
+    console.log(window);
     const { initState, location } = useAppStore();
     const { setUsers, setConnected, isConnected } = useSocketStore();
     useEffect(() => {
@@ -57,9 +58,6 @@ function Home() {
             <div id={'container'} className="z-100 absolute right-6 top-6 flex gap-2 ">
                 <MapButton />
                 <ThemeSwitcher />
-            </div>
-            <div className="absolute bottom-0 right-0 h-96 w-96">
-                <iframe src="/iframe" width="100%" height="100%" className="absolute bottom-0"></iframe>
             </div>
         </div>
     );

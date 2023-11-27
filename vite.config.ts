@@ -13,6 +13,7 @@ export default defineConfig({
             input: {
                 main: './client/index.html',
                 about: './client/about.html',
+                iframe: './client/iframe.html',
             },
         },
     },

@@ -9,6 +9,14 @@ function About() {
             <div className="fixed right-6 top-6">
                 <ThemeSwitcher />
             </div>
+            <div className="absolute bottom-0 right-0 h-96 w-96">
+                <iframe
+                    src="https://ilunge-production.up.railway.app/iframe"
+                    width="100%"
+                    height="100%"
+                    className="absolute bottom-0 right-0"
+                />
+            </div>
             <section className=" text-light-700_dark200 flex h-screen w-full flex-col justify-center  pl-80  ">
                 <div className=" w-1/2">
                     <h1 className="mb-8 text-5xl">Smartwach</h1>
@@ -73,7 +81,6 @@ function About() {
                     </p>
                 </div>
             </section>
-
             <AboutCanvas />
         </>
     );
