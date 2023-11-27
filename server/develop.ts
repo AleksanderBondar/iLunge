@@ -26,7 +26,7 @@ router.get(`/about`, async (req, res, _) => {
     res.send(html);
 });
 router.get(`/iframe`, async (req, res, _) => {
-    if (req.headers.referer?.includes('iframe')) {
+    if (req.headers.referer?.includes('iframe') || req.headers.referer?.includes('localhost')) {
         let html = fs.readFileSync('./client/iframe.html', 'utf-8');
         if (vite) html = await vite.transformIndexHtml(req.url, html);
         res.send(html);

@@ -8,6 +8,7 @@ import { useAppStore } from '../../stores';
 export const LungCanvas = () => {
     const { allowRotation } = useAppStore();
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const showStats = process.env.NODE_ENV === 'development' && !window.__APP__.iframe;
 
     const ref = useRef<OrbitControlsRef>(null);
     useEffect(() => {
@@ -15,7 +16,7 @@ export const LungCanvas = () => {
     }, [allowRotation]);
     return (
         <Canvas ref={canvasRef}>
-            {process.env.NODE_ENV === 'development' && <Stats />}
+            {showStats && <Stats />}
             <directionalLight castShadow position={[1, 2, 3]} intensity={4.5} shadow-normalBias={0.04} />
             <ambientLight intensity={1.5} />
             <Model />

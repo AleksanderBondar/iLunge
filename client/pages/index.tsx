@@ -19,8 +19,7 @@ declare global {
 const socket = io();
 
 function Home() {
-    const isIFrame = window.__APP__.iframe;
-    console.log(isIFrame);
+    const iFrameAPP = window.__APP__.iframe;
     const { initState, location } = useAppStore();
     const { setUsers, setConnected, isConnected } = useSocketStore();
     useEffect(() => {
@@ -58,8 +57,12 @@ function Home() {
         }
     }, [location, isConnected]);
 
-    return (
-        <div className="background-light900_dark200  relative h-screen overflow-hidden">
+    return iFrameAPP ? (
+        <div className="background-light900_dark200 relative h-screen overflow-hidden">
+            <LungCanvas />
+        </div>
+    ) : (
+        <div className="background-light900_dark200 relative h-screen overflow-hidden">
             <LungCanvas />
             <Search />
             <AirQualityInfo />

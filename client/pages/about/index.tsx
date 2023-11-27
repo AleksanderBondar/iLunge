@@ -11,7 +11,7 @@ function About() {
             </div>
             <div className="absolute bottom-0 right-0 h-96 w-96">
                 <iframe
-                    src="https://ilunge-production.up.railway.app/iframe"
+                    src="http://localhost:3000/iframe"
                     width="100%"
                     height="100%"
                     className="absolute bottom-0 right-0"
