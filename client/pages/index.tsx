@@ -8,10 +8,19 @@ import { ThemeSwitcher } from '../components/ThemeSwitcher';
 import { MapButton } from '../components/MapButton';
 import { io } from 'socket.io-client';
 
+declare global {
+    interface Window {
+        __APP__: {
+            iframe: boolean;
+        };
+    }
+}
+
 const socket = io();
 
 function Home() {
-    console.log(window);
+    const isIFrame = window.__APP__.iframe;
+    console.log(isIFrame);
     const { initState, location } = useAppStore();
     const { setUsers, setConnected, isConnected } = useSocketStore();
     useEffect(() => {
