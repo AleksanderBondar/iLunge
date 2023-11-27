@@ -8,11 +8,11 @@ const router = Router({ strict: true });
 API(router);
 
 router.get(`/`, async (__, res, _) => {
-    let html = fs.readFileSync('./client/index.html', 'utf-8');
+    let html = fs.readFileSync('./dist/index.html', 'utf-8');
     res.send(html);
 });
 router.get(`/about`, async (__, res, _) => {
-    let html = fs.readFileSync('./client/about.html', 'utf-8');
+    let html = fs.readFileSync('./dist/about.html', 'utf-8');
     res.send(html);
 });
 router.use('*', (_, res) => {
