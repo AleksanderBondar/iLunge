@@ -15,9 +15,13 @@ router.get(`/about`, async (__, res, _) => {
     let html = fs.readFileSync('./dist/about.html', 'utf-8');
     res.send(html);
 });
-router.get(`/iframe`, async (__, res, _) => {
-    let html = fs.readFileSync('./dist/iframe.html', 'utf-8');
-    res.send(html);
+router.get(`/iframe`, async (req, res, _) => {
+    if (req.headers.referer?.includes('iframe')) {
+        let html = fs.readFileSync('./dist/iframe.html', 'utf-8');
+        res.send(html);
+    } else {
+        res.status(404).send({ message: 'Not Found' });
+    }
 });
 router.use('*', (_, res) => {
     res.status(404).send({ message: 'Not Found' });
