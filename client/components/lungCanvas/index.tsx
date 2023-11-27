@@ -8,7 +8,7 @@ import { useAppStore } from '../../stores';
 export const LungCanvas = () => {
     const { allowRotation } = useAppStore();
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const showStats = process.env.NODE_ENV === 'development' && !window.__INITIAL_DATA__.context.iframe;
+    const showStats = process.env.NODE_ENV === 'development' && !window?.__INITIAL_DATA__?.context?.iframe;
 
     const ref = useRef<OrbitControlsRef>(null);
     useEffect(() => {
