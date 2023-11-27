@@ -17,7 +17,7 @@ type AppStore = {
     airQualities: Record<string, AirQuality> | null;
     airQuality: AirQuality | null;
 
-    initState: () => Promise<void>;
+    initState: (init?: { stations: Stations; airQualities: Record<string, AirQuality> }) => Promise<void>;
     setMode: (mode: string) => void;
     selectStation: (id: number | null) => void;
     setSearchValue: (value: string | null) => void;
@@ -29,7 +29,7 @@ type AppStore = {
 };
 
 export const useAppStore = create<AppStore>()((set, get) => {
-    const initState = async () => {
+    const initState = async (init?: { stations: Stations; airQualities: Record<string, AirQuality> }) => {
         if (
             localStorage.theme === 'dark' ||
             (window.matchMedia('(prefers-color-scheme:dark)').matches && !('theme' in localStorage))
@@ -41,9 +41,13 @@ export const useAppStore = create<AppStore>()((set, get) => {
             document.documentElement.classList.remove('dark');
         }
         try {
-            const response = await fetch('/api/stations');
-            const data = await response.json();
-            set({ stations: data, loading: false });
+            if (init?.stations) {
+                set({ stations: init.stations, loading: false });
+            } else {
+                const response = await fetch('/api/stations');
+                const data = await response.json();
+                set({ stations: data, loading: false });
+            }
         } catch (e) {
             console.error(e);
             set(state => ({ ...state, loading: false }));
@@ -61,9 +65,13 @@ export const useAppStore = create<AppStore>()((set, get) => {
         }
 
         try {
-            const res = await fetch(`/api/qualities`);
-            const airQualities = (await res.json()) as Record<string, AirQuality>;
-            set({ airQualities });
+            if (init?.airQualities) {
+                set({ airQualities: init.airQualities });
+            } else {
+                const res = await fetch(`/api/qualities`);
+                const airQualities = (await res.json()) as Record<string, AirQuality>;
+                set({ airQualities });
+            }
         } catch (e) {
             console.error(e);
             set({ airQualities: null });

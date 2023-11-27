@@ -1,7 +1,7 @@
 import fs from 'fs';
 import type { AirQuality, Station } from '../../types/backend';
 
-const cache = {
+export const cache = {
     stations: './server/cache/stations.json',
     quality: './server/cache/quality.json',
 };

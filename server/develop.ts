@@ -5,6 +5,7 @@ import fs from 'fs';
 import viteConfig from '../vite.config.js';
 import { API } from './api/index.js';
 import { IO } from './api/io.js';
+import { readFromCache } from './utils/cache.js';
 const router = Router({ strict: true });
 
 const vite = await createServer({
@@ -18,6 +19,21 @@ API(router);
 router.get(`/`, async (req, res, _) => {
     let html = fs.readFileSync('./client/index.html', 'utf-8');
     if (vite) html = await vite.transformIndexHtml(req.url, html);
+
+    const data = {
+        context: {
+            iframe: false,
+            language: req.headers['accept-language']?.split(',')[0] || 'en',
+        },
+        data: {
+            stations: await readFromCache('stations'),
+            airQualities: await readFromCache('quality'),
+        },
+    };
+    html = html.replace(
+        '</body>',
+        `<script type="module">window.__INITIAL_DATA__ = ${JSON.stringify(data)}</script></body>`,
+    );
     res.send(html);
 });
 router.get(`/about`, async (req, res, _) => {
