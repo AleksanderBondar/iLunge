@@ -41,6 +41,14 @@ export const router = createBrowserRouter([
         ),
     },
     {
+        path: '/iframe',
+        element: (
+            <Providers>
+                <Home />
+            </Providers>
+        ),
+    },
+    {
         path: '/about',
         element: (
             <Providers>
