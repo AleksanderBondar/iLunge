@@ -40,7 +40,8 @@ router.use('*', (_, res) => {
 });
 
 const app = express();
-app.use(express.static('dist', { index: false, maxAge: '1y' }));
+app.use(express.static('dist', { index: false, maxAge: 1800000 }));
+
 app.use(router);
 const server = app.listen(process.env.PORT || 3000, () => {
     console.log(`Listening on port http://localhost:3000...`);
