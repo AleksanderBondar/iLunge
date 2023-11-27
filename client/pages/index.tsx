@@ -60,6 +60,8 @@ function Home() {
     return iFrameAPP ? (
         <div className="background-light900_dark200 relative h-screen overflow-hidden">
             <LungCanvas />
+            <MapButton />
+            <Map />
         </div>
     ) : (
         <div className="background-light900_dark200 relative h-screen overflow-hidden">
