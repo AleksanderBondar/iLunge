@@ -37,7 +37,11 @@ export const MapView = ({ setMap }: { setMap: (map: MapType) => void }) => {
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
                 {location && (
-                    <Marker opacity={0.8} position={[parseFloat(location.lat || ''), parseFloat(location.lon || '')]}>
+                    <Marker
+                        icon={pickGoodIcon('user')}
+                        opacity={0.8}
+                        position={[parseFloat(location.lat || ''), parseFloat(location.lon || '')]}
+                    >
                         <Popup>
                             <span>Twoja lokalizacja</span>
                         </Popup>
@@ -83,5 +87,6 @@ export const MapView = ({ setMap }: { setMap: (map: MapType) => void }) => {
         ),
         [stations, airQualities, selectedStation, users],
     );
+
     return <div className="h-full w-full bg-white">{display}</div>;
 };
