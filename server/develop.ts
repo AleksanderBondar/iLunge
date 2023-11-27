@@ -1,11 +1,10 @@
 import express from 'express';
 import Router from 'express-promise-router';
 import { createServer } from 'vite';
+import fs from 'fs';
 import viteConfig from '../vite.config.js';
 import { API } from './api/index.js';
-import { ROUTES } from './routes/index.js';
 import { IO } from './api/io.js';
-
 const router = Router({ strict: true });
 
 const vite = await createServer({
@@ -14,8 +13,18 @@ const vite = await createServer({
     ...viteConfig,
 });
 
-ROUTES(router);
 API(router);
+
+router.get(`/`, async (req, res, _) => {
+    let html = fs.readFileSync('./client/index.html', 'utf-8');
+    if (vite) html = await vite.transformIndexHtml(req.url, html);
+    res.send(html);
+});
+router.get(`/about`, async (req, res, _) => {
+    let html = fs.readFileSync('./client/index.html', 'utf-8');
+    if (vite) html = await vite.transformIndexHtml(req.url, html);
+    res.send(html);
+});
 
 router.use(vite.middlewares);
 router.use('*', (_, res) => {

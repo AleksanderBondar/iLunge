@@ -6,6 +6,7 @@ import fs from 'fs';
 const router = Router({ strict: true });
 
 API(router);
+
 router.get(`/`, async (__, res, _) => {
     let html = fs.readFileSync('./client/index.html', 'utf-8');
     res.send(html);
