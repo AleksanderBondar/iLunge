@@ -3,12 +3,27 @@ import Router from 'express-promise-router';
 import { API } from './api/index.js';
 import { IO } from './api/io.js';
 import fs from 'fs';
+import { readFromCache } from './utils/cache.js';
 const router = Router({ strict: true });
 
 API(router);
 
-router.get(`/`, async (__, res, _) => {
+router.get(`/`, async (req, res, _) => {
     let html = fs.readFileSync('./dist/index.html', 'utf-8');
+    const data = {
+        context: {
+            iframe: false,
+            language: req.headers['accept-language']?.split(',')[0] || 'en',
+        },
+        data: {
+            stations: await readFromCache('stations'),
+            airQualities: await readFromCache('quality'),
+        },
+    };
+    html = html.replace(
+        '</body>',
+        `<script type="module">window.__INITIAL_DATA__ = ${JSON.stringify(data)}</script></body>`,
+    );
     res.send(html);
 });
 router.get(`/about`, async (__, res, _) => {

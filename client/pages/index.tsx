@@ -7,11 +7,15 @@ import { Map } from '../components/map';
 import { ThemeSwitcher } from '../components/ThemeSwitcher';
 import { MapButton } from '../components/MapButton';
 import { io } from 'socket.io-client';
+import { AirQuality, Stations } from '../../types/front';
 
 declare global {
     interface Window {
-        __APP__: {
-            iframe: boolean;
+        __INITIAL_DATA__: {
+            context: {
+                iframe: boolean;
+            };
+            data: { stations: Stations; airQualities: Record<string, AirQuality> };
         };
     }
 }
@@ -19,13 +23,13 @@ declare global {
 const socket = io();
 
 function Home() {
-    const iFrameAPP = window.__APP__.iframe;
+    const iFrameAPP = window.__INITIAL_DATA__.context.iframe;
     const { initState, location } = useAppStore();
     const { setUsers, setConnected, isConnected } = useSocketStore();
     const [usersMousePositions, setUsersMousePositions] = React.useState<{ id: string; x: number; y: number }[]>([]);
 
     useEffect(() => {
-        initState();
+        initState(window.__INITIAL_DATA__.data);
 
         try {
             const onConnect = () => setConnected(true);
