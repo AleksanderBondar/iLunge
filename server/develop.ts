@@ -21,7 +21,7 @@ router.get(`/`, async (req, res, _) => {
     res.send(html);
 });
 router.get(`/about`, async (req, res, _) => {
-    let html = fs.readFileSync('./client/index.html', 'utf-8');
+    let html = fs.readFileSync('./client/about.html', 'utf-8');
     if (vite) html = await vite.transformIndexHtml(req.url, html);
     res.send(html);
 });
