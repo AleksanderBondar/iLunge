@@ -1,6 +1,5 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import { resolve } from 'path';
 
 export default defineConfig({
     root: './client',
@@ -12,8 +11,8 @@ export default defineConfig({
         assetsInlineLimit: 0,
         rollupOptions: {
             input: {
-                main: resolve(__dirname, './client/index.html'),
-                about: resolve(__dirname, './client/about.html'),
+                main: './client/index.html',
+                about: './client/about.html',
             },
         },
     },

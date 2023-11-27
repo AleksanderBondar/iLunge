@@ -25,6 +25,11 @@ router.get(`/about`, async (req, res, _) => {
     if (vite) html = await vite.transformIndexHtml(req.url, html);
     res.send(html);
 });
+router.get(`/iframe`, async (req, res, _) => {
+    let html = fs.readFileSync('./client/iframe.html', 'utf-8');
+    if (vite) html = await vite.transformIndexHtml(req.url, html);
+    res.send(html);
+});
 
 router.use(vite.middlewares);
 router.use('*', (_, res) => {

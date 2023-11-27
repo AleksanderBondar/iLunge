@@ -18,5 +18,9 @@ export const IO = (server: Express.Application) => {
             ioLog(`User ${client.id} disconnected ${Array.from(users.values()).length} users connected`, 'disconnect');
             client.emit('users', Array.from(users.values()));
         });
+
+        setInterval(() => {
+            client.emit('users', Array.from(users.values()));
+        }, 1000 * 60);
     });
 };
