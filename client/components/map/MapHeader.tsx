@@ -73,7 +73,6 @@ export const MapHeader = ({ map }: { map: Map }) => {
                     <button
                         onClick={() => {
                             const closestStations = listClosestStationsToCurrentLocation(3);
-                            console.log(closestStations);
                         }}
                     >
                         Closest stations

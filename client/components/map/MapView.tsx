@@ -47,8 +47,13 @@ export const MapView = ({ setMap }: { setMap: (map: MapType) => void }) => {
                         </Popup>
                     </Marker>
                 )}
-                {users.map(({ city, lat, lon }) => (
-                    <Marker icon={pickGoodIcon('users')} opacity={0.8} position={[parseFloat(lat), parseFloat(lon)]}>
+                {users.map(({ id, city, lat, lon }) => (
+                    <Marker
+                        key={id + city}
+                        icon={pickGoodIcon('users')}
+                        opacity={0.8}
+                        position={[parseFloat(lat), parseFloat(lon)]}
+                    >
                         <Popup>
                             <span>{city}</span>
                         </Popup>
@@ -60,6 +65,7 @@ export const MapView = ({ setMap }: { setMap: (map: MapType) => void }) => {
                         const airQuality = airQualities ? airQualities[id] : null;
                         return (
                             <Marker
+                                key={id + stationName}
                                 eventHandlers={{ dblclick: async () => await dblclick(id) }}
                                 opacity={isSelected ? 0.8 : 0.5}
                                 icon={pickGoodIcon(

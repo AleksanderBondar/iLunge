@@ -64,7 +64,10 @@ export const pickGoodIcon = (mode: 'selected' | 'default' | 'user' | 'users' | n
                 });
             case `user`:
                 return L.icon({
-                    iconUrl: `/assets/icons/markers/marker_icon.png`,
+                    iconUrl: `/assets/icons/markers/marker_user.svg`,
+                    iconSize: [20, 20],
+                    iconAnchor: [10, 20],
+                    popupAnchor: [0, -20],
                 });
             case `users`:
                 return L.icon({

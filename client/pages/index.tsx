@@ -22,6 +22,8 @@ function Home() {
     const iFrameAPP = window.__APP__.iframe;
     const { initState, location } = useAppStore();
     const { setUsers, setConnected, isConnected } = useSocketStore();
+    const [usersMousePositions, setUsersMousePositions] = React.useState<{ id: string; x: number; y: number }[]>([]);
+
     useEffect(() => {
         initState();
 
@@ -29,17 +31,17 @@ function Home() {
             const onConnect = () => setConnected(true);
             const onDisconnect = () => setConnected(false);
             const onUsers = users => setUsers(users);
-            const onRandom = e => console.log(e);
+            const onMousePositions = usersMousePositions => setUsersMousePositions(usersMousePositions);
             socket.on('connect', onConnect);
             socket.on('disconnect', onDisconnect);
             socket.on('users', onUsers);
-            socket.on('random', onRandom);
+            socket.on('mousePositions', onMousePositions);
 
             return () => {
                 socket.off('connect', onConnect);
                 socket.off('disconnect', onDisconnect);
                 socket.off('users', onUsers);
-                socket.off('random', onRandom);
+                socket.off('mousePositions', onMousePositions);
             };
         } catch (error) {
             setConnected(false);
@@ -57,6 +59,32 @@ function Home() {
         }
     }, [location, isConnected]);
 
+    useEffect(() => {
+        if (!isConnected) return;
+        const handleMouseMove = e => {
+            const data = { x: e.clientX, y: e.clientY };
+            socket.emit('mouseMove', data);
+        };
+        window.addEventListener('mousemove', handleMouseMove);
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove);
+        };
+    }, [isConnected]);
+
+    const memoMousesPositions = React.useMemo(() => {
+        return usersMousePositions.map((user, index) => {
+            const colors = ['bg-red-400', 'bg-blue-400', 'bg-green-400', 'bg-yellow-400'];
+            const color = colors[index % colors.length];
+            return (
+                <div
+                    key={index}
+                    className={`bg-light-700_dark200 fixed h-2 w-2 rounded-full bg-opacity-50 ${color}`}
+                    style={{ left: user.x - 4, top: user.y - 7 }}
+                />
+            );
+        });
+    }, [usersMousePositions]);
+
     return iFrameAPP ? (
         <div className="background-light900_dark200 relative h-screen overflow-hidden">
             <LungCanvas />
@@ -65,6 +93,7 @@ function Home() {
         </div>
     ) : (
         <div className="background-light900_dark200 relative h-screen overflow-hidden">
+            {memoMousesPositions}
             <LungCanvas />
             <Search />
             <AirQualityInfo />
