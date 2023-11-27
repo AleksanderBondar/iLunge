@@ -30,14 +30,9 @@ export const IO = (server: Express.Application) => {
 
         client.on('mouseMove', (data: MousePosition) => {
             mousePositions.set(client.id, data);
-            client.emit(
-                'mousePositions',
-                Array.from(mousePositions.entries()).map(([id, data]) => ({ id, ...data })),
-            );
-        });
-
-        client.on('mouseClick', (data: MousePosition) => {
-            client.emit('mouseClick', data);
+            const positionsArray = Array.from(mousePositions.entries()).map(([id, data]) => ({ id, ...data }));
+            client.emit('mousePositions', positionsArray);
+            client.broadcast.emit('mousePositions', positionsArray);
         });
 
         setInterval(() => {

@@ -51,7 +51,6 @@ router.use(vite.middlewares);
 router.use('*', (_, res) => {
     res.status(404).send({ message: 'Not Found' });
 });
-
 const app = express();
 app.use(router);
 

@@ -22,8 +22,9 @@ router.get(`/`, async (req, res, _) => {
     };
     html = html.replace(
         '</body>',
-        `<script type="module">window.__INITIAL_DATA__ = ${JSON.stringify(data)}</script></body>`,
+        `<script type="module">window.__INITIAL_DATA__ = ${JSON.stringify(data)}</script> </body>`,
     );
+    console.log(data);
     res.send(html);
 });
 router.get(`/about`, async (__, res, _) => {
@@ -39,7 +40,7 @@ router.use('*', (_, res) => {
 });
 
 const app = express();
-app.use(express.static('dist'));
+// app.use(express.static('dist'));
 app.use(router);
 const server = app.listen(process.env.PORT || 3000, () => {
     console.log(`Listening on port http://localhost:3000...`);

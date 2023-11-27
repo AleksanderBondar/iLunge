@@ -12,10 +12,17 @@ import { AirQuality, Stations } from '../../types/front';
 declare global {
     interface Window {
         __INITIAL_DATA__: {
-            context: {
-                iframe: boolean;
+            context: { iframe: boolean };
+            data: {
+                stations: {
+                    timestamp: number;
+                    stations: Stations;
+                };
+                airQualities: {
+                    timestamp: number;
+                    qualities: Record<string, AirQuality>;
+                };
             };
-            data: { stations: Stations; airQualities: Record<string, AirQuality> };
         };
     }
 }
@@ -82,7 +89,7 @@ function Home() {
             return (
                 <div
                     key={index}
-                    className={`bg-light-700_dark200 fixed h-2 w-2 rounded-full bg-opacity-50 ${color}`}
+                    className={`bg-light-700_dark200 pointer-events-none fixed z-[10000] h-2 w-2 rounded-full bg-opacity-50 ${color}`}
                     style={{ left: user.x - 4, top: user.y - 7 }}
                 />
             );

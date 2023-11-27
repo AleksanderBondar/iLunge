@@ -19,9 +19,16 @@ export const Map = () => {
                 close();
             }
         };
+        const escapeListener = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') {
+                close();
+            }
+        };
         document.addEventListener('mousedown', listener);
+        document.addEventListener('keydown', escapeListener);
         return () => {
             document.removeEventListener('mousedown', listener);
+            document.removeEventListener('keydown', escapeListener);
         };
     }, []);
 
@@ -36,7 +43,7 @@ export const Map = () => {
                     transition={{ duration: 0.3, ease: 'easeInOut' }}
                     className={cx(
                         'fixed bottom-0 right-0',
-                        'border-light700_dark400 h-screen w-screen sm:w-[40rem] sm:border-l-[2px] sm:shadow-2xl',
+                        'border-light700_dark400 h-screen w-screen sm:w-[50vw] sm:border-l-[2px] sm:shadow-2xl',
                     )}
                 >
                     <div className="relative h-full w-full flex-col">
