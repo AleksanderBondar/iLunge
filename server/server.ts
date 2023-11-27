@@ -1,11 +1,11 @@
 import express from 'express';
 import Router from 'express-promise-router';
-import { ROUTES } from './routes/index.js';
+import { API } from './api/index.js';
 import { IO } from './api/io.js';
 import fs from 'fs';
 const router = Router({ strict: true });
 
-ROUTES(router);
+API(router);
 router.get(`/`, async (__, res, _) => {
     let html = fs.readFileSync('./client/index.html', 'utf-8');
     res.send(html);
