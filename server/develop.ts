@@ -26,13 +26,9 @@ router.get(`/about`, async (req, res, _) => {
     res.send(html);
 });
 router.get(`/iframe`, async (req, res, _) => {
-    if (req.headers.referer?.includes('iframe') || req.headers.referer?.includes('localhost')) {
-        let html = fs.readFileSync('./client/iframe.html', 'utf-8');
-        if (vite) html = await vite.transformIndexHtml(req.url, html);
-        res.send(html);
-    } else {
-        res.status(404).send({ message: 'Not Found' });
-    }
+    let html = fs.readFileSync('./client/iframe.html', 'utf-8');
+    if (vite) html = await vite.transformIndexHtml(req.url, html);
+    res.send(html);
 });
 
 router.use(vite.middlewares);
