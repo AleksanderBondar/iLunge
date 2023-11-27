@@ -3,7 +3,6 @@ import React from 'react';
 import { AboutCanvas } from '../../components/aboutCanvas';
 import { ThemeSwitcher } from '../../components/ThemeSwitcher';
 
-HTMLCanvasElement;
 function About() {
     return (
         <>
