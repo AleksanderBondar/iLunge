@@ -23,7 +23,7 @@ type AppStore = {
     setSearchValue: (value: string | null) => void;
     initSearch: () => void;
     setSearch: (search: string) => void;
-
+    checkMode: () => void;
     allowRotation: boolean;
     toggleRotation: () => void;
 };
@@ -144,7 +144,18 @@ export const useAppStore = create<AppStore>()((set, get) => {
         }
         set(state => ({ ...state, mode }));
     };
-
+    const checkMode = () => {
+        if (
+            localStorage.theme === 'dark' ||
+            (window.matchMedia('(prefers-color-scheme:dark)').matches && !('theme' in localStorage))
+        ) {
+            set({ mode: 'dark', loading: true });
+            document.documentElement.classList.add('dark');
+        } else {
+            set({ mode: 'light', loading: true });
+            document.documentElement.classList.remove('dark');
+        }
+    };
     const toggleRotation = () => {
         const { allowRotation } = get();
         set({ allowRotation: !allowRotation });
@@ -168,7 +179,7 @@ export const useAppStore = create<AppStore>()((set, get) => {
         setSearchValue,
         initSearch,
         setSearch,
-
+        checkMode,
         allowRotation: false,
         toggleRotation,
     };
