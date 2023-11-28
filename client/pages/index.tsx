@@ -14,8 +14,10 @@ declare global {
     interface Window {
         __INITIAL_DATA__: {
             context: { iframe: boolean; language: string };
-            stations: { timestamp: number; stations: Stations };
-            airQualities: { timestamp: number; qualities: Record<string, AirQuality> };
+            props: {
+                stations: { timestamp: number; stations: Stations };
+                airQualities: { timestamp: number; qualities: Record<string, AirQuality> };
+            };
         };
     }
 }
@@ -29,7 +31,7 @@ function Home() {
     const [usersMousePositions, setUsersMousePositions] = React.useState<{ id: string; x: number; y: number }[]>([]);
 
     useEffect(() => {
-        initState(window?.__INITIAL_DATA__);
+        initState(window?.__INITIAL_DATA__?.props);
 
         try {
             const onConnect = () => setConnected(true);
