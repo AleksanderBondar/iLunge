@@ -9,7 +9,7 @@ import { MapButton } from '../components/MapButton';
 import { io } from 'socket.io-client';
 import { AirQuality, Stations } from '../../types/front';
 import _ from 'lodash';
-
+import { Link } from 'react-router-dom';
 declare global {
     interface Window {
         __INITIAL_DATA__: {
@@ -127,6 +127,12 @@ function Home() {
         </div>
     ) : (
         <div className="background-light900_dark200 relative h-screen overflow-hidden">
+            <Link
+                to="/about"
+                className="text-light-700_dark200 absolute bottom-5 right-6 z-50 animate-pulse cursor-pointer text-lg sm:bottom-auto sm:left-6 sm:right-auto sm:top-6"
+            >
+                Wkrótce..
+            </Link>
             {memoMousesPositions}
             <LungCanvas />
             <Search />

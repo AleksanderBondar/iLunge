@@ -47,3 +47,8 @@ body {
         opacity: 0;
     }
 }
+
+.statsContainer > div {
+    top: auto !important;
+    bottom: 0;
+}

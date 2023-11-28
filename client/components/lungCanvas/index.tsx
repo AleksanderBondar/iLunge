@@ -9,18 +9,25 @@ export const LungCanvas = () => {
     const { allowRotation } = useAppStore();
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const showStats = process.env.NODE_ENV === 'development' && !window?.__INITIAL_DATA__?.context?.iframe;
-
+    const statsContainerRef = useRef<HTMLDivElement>(null);
     const ref = useRef<OrbitControlsRef>(null);
     useEffect(() => {
         if (!allowRotation && ref.current) ref.current.reset();
     }, [allowRotation]);
+
     return (
-        <Canvas ref={canvasRef}>
-            {showStats && <Stats />}
-            <directionalLight castShadow position={[1, 2, 3]} intensity={4.5} shadow-normalBias={0.04} />
-            <ambientLight intensity={1.5} />
-            <Model />
-            <OrbitControls ref={ref} enabled={allowRotation} maxDistance={8} minDistance={4} enablePan={false} />
-        </Canvas>
+        <>
+            {showStats && (
+                <div ref={statsContainerRef} className="statsContainer absolute bottom-0 h-[80px] w-[80px]">
+                    <Stats parent={statsContainerRef} />
+                </div>
+            )}
+            <Canvas ref={canvasRef}>
+                <directionalLight castShadow position={[1, 2, 3]} intensity={4.5} shadow-normalBias={0.04} />
+                <ambientLight intensity={1.5} />
+                <Model />
+                <OrbitControls ref={ref} enabled={allowRotation} maxDistance={8} minDistance={4} enablePan={false} />
+            </Canvas>
+        </>
     );
 };
