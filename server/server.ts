@@ -11,7 +11,7 @@ API(router);
 
 router.get(`/`, async (req, res, _) => {
     let html = fs.readFileSync('./dist/index.html', 'utf-8');
-    const data = getInitialData(req, '/');
+    const data = await getInitialData(req, '/');
     html = html.replace(
         '</body>',
         `<script type="module">window.__INITIAL_DATA__ = ${JSON.stringify(data)}</script> </body>`,
@@ -20,7 +20,7 @@ router.get(`/`, async (req, res, _) => {
 });
 router.get(`/about`, async (req, res, _) => {
     let html = fs.readFileSync('./dist/about.html', 'utf-8');
-    const data = getInitialData(req, '/about');
+    const data = await getInitialData(req, '/about');
     html = html.replace(
         '</body>',
         `<script type="module">window.__INITIAL_DATA__ = ${JSON.stringify(data)}</script> </body>`,
@@ -29,7 +29,7 @@ router.get(`/about`, async (req, res, _) => {
 });
 router.get(`/iframe`, async (req, res, _) => {
     let html = fs.readFileSync('./dist/iframe.html', 'utf-8');
-    const data = getInitialData(req, '/iframe');
+    const data = await getInitialData(req, '/iframe');
     html = html.replace(
         '</body>',
         `<script type="module">window.__INITIAL_DATA__ = ${JSON.stringify(data)}</script> </body>`,
