@@ -4,9 +4,15 @@ import { AirQualityLoader } from './AirQualityLoader';
 import { airQualityColors } from '../constans';
 
 export const AirQualityInfo = () => {
-    const { airQuality, qualityLoading, setHoveredQualityIndex } = useAppStore();
+    const { airQuality, qualityLoading, setHoveredQualityIndex, selectedStation } = useAppStore();
     return (
-        <div className="text-light-700_dark200 absolute bottom-4 left-2 z-50 flex flex-col rounded-xl px-6 py-4 text-sm lg:bottom-[50%] lg:left-10 lg:translate-y-1/2 lg:gap-2">
+        <aside className="text-light-700_dark200 absolute bottom-4 left-2 z-50 flex flex-col rounded-xl px-6 py-4 text-sm lg:bottom-[50%] lg:left-10 lg:translate-y-1/2 lg:gap-2">
+            {selectedStation?.city.name ? (
+                <>
+                    <h3>Wybrana stacja : {selectedStation?.city.name ?? '-'}</h3>
+                    <h3 className="border-light700_dark400  border-b pb-3">{selectedStation?.addressStreet ?? '-'}</h3>
+                </>
+            ) : null}
             <h2 className="text-base">Jakość powietrza</h2>
             {qualityLoading || !airQuality ? (
                 <AirQualityLoader loading={qualityLoading} />
@@ -51,7 +57,7 @@ export const AirQualityInfo = () => {
                         );
                     })
             )}
-        </div>
+        </aside>
     );
 };
 
