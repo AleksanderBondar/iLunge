@@ -35,6 +35,8 @@ type AppStore = {
 
     allowRotation: boolean;
     toggleRotation: () => void;
+    visibility: boolean;
+    toggleVisibility: () => void;
 };
 
 export const useAppStore = create<AppStore>()((set, get) => {
@@ -58,7 +60,6 @@ export const useAppStore = create<AppStore>()((set, get) => {
             set({ mode: 'light', loading: true });
             document.documentElement.classList.remove('dark');
         }
-        console.log(init);
         try {
             if (init?.stations?.stations) {
                 set({ stations: init.stations.stations, loading: false });
@@ -177,6 +178,11 @@ export const useAppStore = create<AppStore>()((set, get) => {
         set({ allowRotation: !allowRotation });
     };
 
+    const toggleVisibility = () => {
+        const { visibility } = get();
+        set({ visibility: !visibility });
+    };
+
     return {
         loading: true,
         stations: {},
@@ -198,5 +204,7 @@ export const useAppStore = create<AppStore>()((set, get) => {
 
         allowRotation: false,
         toggleRotation,
+        visibility: true,
+        toggleVisibility,
     };
 });

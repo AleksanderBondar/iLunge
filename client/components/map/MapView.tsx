@@ -6,7 +6,7 @@ import { pickGoodIcon } from './utils';
 import { Minimap } from './MiniMap';
 
 export const MapView = ({ setMap }: { setMap: (map: MapType) => void }) => {
-    const { stations, selectedStation, airQualities, selectStation, location } = useAppStore();
+    const { stations, selectedStation, airQualities, selectStation, location, visibility } = useAppStore();
     const { goTo, close } = useMapStore();
     const { users } = useSocketStore();
 
@@ -36,7 +36,7 @@ export const MapView = ({ setMap }: { setMap: (map: MapType) => void }) => {
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                {location && (
+                {visibility && location && (
                     <Marker
                         icon={pickGoodIcon('user')}
                         opacity={0.8}
@@ -47,18 +47,19 @@ export const MapView = ({ setMap }: { setMap: (map: MapType) => void }) => {
                         </Popup>
                     </Marker>
                 )}
-                {users.map(({ id, city, lat, lon }) => (
-                    <Marker
-                        key={id + city}
-                        icon={pickGoodIcon('users')}
-                        opacity={0.8}
-                        position={[parseFloat(lat), parseFloat(lon)]}
-                    >
-                        <Popup>
-                            <span>{city}</span>
-                        </Popup>
-                    </Marker>
-                ))}
+                {visibility &&
+                    users.map(({ id, city, lat, lon }) => (
+                        <Marker
+                            key={id + city}
+                            icon={pickGoodIcon('users')}
+                            opacity={0.8}
+                            position={[parseFloat(lat), parseFloat(lon)]}
+                        >
+                            <Popup>
+                                <span>{city}</span>
+                            </Popup>
+                        </Marker>
+                    ))}
                 {Object.values(stations).map(station =>
                     station.map(({ id, gegrLat, gegrLon, stationName }) => {
                         const isSelected = selectedStation?.id === id;
@@ -91,7 +92,7 @@ export const MapView = ({ setMap }: { setMap: (map: MapType) => void }) => {
                 )}
             </MapContainer>
         ),
-        [stations, airQualities, selectedStation, users],
+        [stations, airQualities, selectedStation, users, visibility],
     );
 
     return <div className="h-full w-full bg-white">{display}</div>;

@@ -2,8 +2,8 @@ import React from 'react';
 import { AutoCompleteSearch } from './AutoCompleteSearch';
 
 import { GeoLocalizationButton } from './GeoLocationButton';
-import { ThemeSwitcher } from './ThemeSwitcher';
 import { RotateButton } from './RotateButton';
+import { UserIcon } from './UserIcon';
 
 export const Search = () => {
     return (
@@ -11,6 +11,9 @@ export const Search = () => {
             <div className="relative flex w-full max-w-[1024px] flex-col items-center justify-center gap-8 px-8">
                 <div className="flex w-full flex-col-reverse items-center justify-center gap-4 sm:flex-row sm:gap-8">
                     <div className="flex justify-between gap-4">
+                        <div className="flex gap-4">
+                            <UserIcon />
+                        </div>
                         <div className="flex gap-4">
                             <RotateButton />
                         </div>

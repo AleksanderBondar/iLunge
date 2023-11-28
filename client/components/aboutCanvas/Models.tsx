@@ -27,7 +27,6 @@ export const Models = () => {
 
     const handleScroll = () => {
         scrollRef.current = window.scrollY / window.innerHeight;
-        console.log(window.scrollY / window.outerHeight);
     };
 
     const handleResize = () => {

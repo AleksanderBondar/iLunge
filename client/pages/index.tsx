@@ -8,6 +8,7 @@ import { ThemeSwitcher } from '../components/ThemeSwitcher';
 import { MapButton } from '../components/MapButton';
 import { io } from 'socket.io-client';
 import { AirQuality, Stations } from '../../types/front';
+import _ from 'lodash';
 
 declare global {
     interface Window {
@@ -23,7 +24,7 @@ const socket = io();
 
 function Home() {
     const iFrameAPP = window?.__INITIAL_DATA__?.context?.iframe;
-    const { initState, location } = useAppStore();
+    const { visibility, initState, location } = useAppStore();
     const { setUsers, setConnected, isConnected } = useSocketStore();
     const [usersMousePositions, setUsersMousePositions] = React.useState<{ id: string; x: number; y: number }[]>([]);
 
@@ -35,16 +36,29 @@ function Home() {
             const onDisconnect = () => setConnected(false);
             const onUsers = users => setUsers(users);
             const onMousePositions = usersMousePositions => setUsersMousePositions(usersMousePositions);
+            const onMouseClick = click => {
+                //create small circle and create boom animation
+                const circle = document.createElement('div');
+                circle.classList.add('circle');
+                circle.style.left = click.x - 3 + 'px';
+                circle.style.top = click.y - 6 + 'px';
+                document.body.appendChild(circle);
+                circle.addEventListener('animationend', () => {
+                    circle.remove();
+                });
+            };
             socket.on('connect', onConnect);
             socket.on('disconnect', onDisconnect);
             socket.on('users', onUsers);
             socket.on('mousePositions', onMousePositions);
+            socket.on('mouseClick', onMouseClick);
 
             return () => {
                 socket.off('connect', onConnect);
                 socket.off('disconnect', onDisconnect);
                 socket.off('users', onUsers);
                 socket.off('mousePositions', onMousePositions);
+                socket.off('mouseClick', onMouseClick);
             };
         } catch (error) {
             setConnected(false);
@@ -53,28 +67,43 @@ function Home() {
 
     useEffect(() => {
         if (isConnected && location && location.lat && location.lon) {
-            const data = {
-                city: location.address.city,
-                lat: location.lat,
-                lon: location.lon,
-            };
-            socket.emit('userAdd', data);
+            if (visibility) {
+                const data = {
+                    city: location.address.city,
+                    lat: location.lat,
+                    lon: location.lon,
+                };
+                socket.emit('userAdd', data);
+            } else {
+                socket.emit('userRemove');
+            }
         }
-    }, [location, isConnected]);
+    }, [location, isConnected, visibility]);
 
     useEffect(() => {
-        if (!isConnected) return;
+        if (!isConnected || !visibility) return;
+
         const handleMouseMove = e => {
             const data = { x: e.clientX, y: e.clientY };
             socket.emit('mouseMove', data);
         };
+
+        const debouncedHandleMouseClick = _.debounce(e => {
+            const data = { x: e.clientX, y: e.clientY };
+            socket.emit('mouseClick', data);
+        }, 150);
+
+        window.addEventListener('click', debouncedHandleMouseClick);
         window.addEventListener('mousemove', handleMouseMove);
+
         return () => {
+            window.removeEventListener('click', debouncedHandleMouseClick);
             window.removeEventListener('mousemove', handleMouseMove);
         };
-    }, [isConnected]);
+    }, [isConnected, visibility]);
 
     const memoMousesPositions = React.useMemo(() => {
+        if (!visibility) return null;
         return usersMousePositions.map((user, index) => {
             const colors = ['bg-red-400', 'bg-blue-400', 'bg-green-400', 'bg-yellow-400'];
             const color = colors[index % colors.length];
@@ -86,7 +115,7 @@ function Home() {
                 />
             );
         });
-    }, [usersMousePositions]);
+    }, [visibility, usersMousePositions]);
 
     return iFrameAPP ? (
         <div className="background-light900_dark200 relative h-screen overflow-hidden">
