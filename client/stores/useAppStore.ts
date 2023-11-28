@@ -37,6 +37,8 @@ type AppStore = {
     toggleRotation: () => void;
     visibility: boolean;
     toggleVisibility: () => void;
+    hoveredQualityIndex: number | undefined;
+    setHoveredQualityIndex: (id: number | undefined) => void;
 };
 
 export const useAppStore = create<AppStore>()((set, get) => {
@@ -194,7 +196,12 @@ export const useAppStore = create<AppStore>()((set, get) => {
         set({ visibility: !visibility });
     };
 
+    const setHoveredQualityIndex = (id: number | undefined) => {
+        set({ hoveredQualityIndex: id });
+    };
+
     return {
+        hoveredQualityIndex: null,
         loading: true,
         stations: {},
         mode: '',
@@ -217,5 +224,6 @@ export const useAppStore = create<AppStore>()((set, get) => {
         toggleRotation,
         visibility: true,
         toggleVisibility,
+        setHoveredQualityIndex,
     };
 });

@@ -6,11 +6,11 @@ import { useFrame } from '@react-three/fiber';
 import { useAppStore } from '../../stores/useAppStore';
 import { Loader } from '../Loader';
 import { airQualityColors } from '../../constans';
-
+import * as THREE from 'three';
 useGLTF.preload(`/assets/models/model.glb`);
 
 export const Model = () => {
-    const { mode, airQuality, allowRotation } = useAppStore();
+    const { mode, airQuality, allowRotation, hoveredQualityIndex } = useAppStore();
     const [colors, setColors] = useState({
         old: mode === 'light' ? '#212734' : '#fff',
         new: mode === 'light' ? '#212734' : '#fff',
@@ -42,7 +42,13 @@ export const Model = () => {
     });
 
     useEffect(() => {
-        if ((airQuality?.st?.indexLevel?.id ?? -1) < 0)
+        if (hoveredQualityIndex !== undefined && hoveredQualityIndex !== -1) {
+            setColors(p => ({
+                new: airQualityColors[hoveredQualityIndex as keyof typeof airQualityColors],
+                old: p.new,
+            }));
+            return;
+        } else if ((airQuality?.st?.indexLevel?.id ?? -1) < 0)
             setColors(p => ({
                 old: mode === 'light' ? '#212734' : '#fff',
                 new: mode === 'light' ? '#212734' : '#fff',
@@ -52,7 +58,24 @@ export const Model = () => {
                 new: airQualityColors[airQuality?.st.indexLevel?.id as keyof typeof airQualityColors],
                 old: p.new,
             }));
-    }, [airQuality, mode]);
+    }, [airQuality, mode, hoveredQualityIndex]);
+
+    useEffect(() => {
+        if (groupRef.current) {
+            if (window.innerWidth <= 640) groupRef.current.scale.set(0.6, 0.6, 0.6);
+            else groupRef.current.scale.set(1, 1, 1);
+        }
+
+        const handleModelResize = () => {
+            if (!groupRef.current) return;
+
+            if (window.innerWidth <= 640) groupRef.current.scale.set(0.6, 0.6, 0.6);
+            else groupRef.current.scale.set(1, 1, 1);
+        };
+
+        window.addEventListener('resize', () => handleModelResize());
+        return () => window.removeEventListener('resize', () => handleModelResize());
+    }, []);
 
     return (
         <Suspense fallback={<Loader />}>
@@ -60,7 +83,7 @@ export const Model = () => {
                 {opacities.map((color, i) => (
                     <mesh key={i} scale={0.012} castShadow receiveShadow geometry={modelMeshes[i].geometry}>
                         {/* @ts-ignore */}
-                        <animated.meshToonMaterial color={color.color} opacity={0.3} transparent />
+                        <animated.meshToonMaterial color={color.color} opacity={0.5} transparent />
                     </mesh>
                 ))}
             </group>

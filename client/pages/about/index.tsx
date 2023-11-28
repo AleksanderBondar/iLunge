@@ -15,10 +15,10 @@ function About() {
             <div className="fixed right-6 top-6">
                 <ThemeSwitcher />
             </div>
-            <section className=" text-light-700_dark200 flex h-screen w-full flex-col justify-center  pl-80  ">
+            <section className=" text-light-700_dark200 flex h-screen w-full flex-col justify-center pl-10 lg:pl-80  ">
                 <div className=" w-1/2">
                     <h1 className="mb-8 text-5xl">Smartwach Widget</h1>
-                    <p className="text-base">
+                    <p className="p-4 text-base">
                         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aperiam, soluta! Explicabo, placeat
                         sed. Labore perspiciatis nobis eveniet accusamus itaque repudiandae in distinctio voluptatibus,
                         similique officiis? Facilis accusantium culpa suscipit modi. Odit autem eum tenetur ducimus
@@ -28,10 +28,10 @@ function About() {
                     </p>
                 </div>
             </section>
-            <section className="  text-light-700_dark200 flex  h-[100vh] w-full   flex-col items-end justify-center pr-80   text-white">
+            <section className="  text-light-700_dark200 flex  h-[100vh] w-full   flex-col items-end justify-center  pl-10 text-white   lg:pr-80">
                 <div className="w-1/2">
                     <h1 className=" mb-8 text-5xl">Mobile App</h1>
-                    <p className="text-base">
+                    <p className="p-4 text-base">
                         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aperiam, soluta! Explicabo, placeat
                         sed. Labore perspiciatis nobis eveniet accusamus itaque repudiandae in distinctio voluptatibus,
                         similique officiis? Facilis accusantium culpa suscipit modi. Odit autem eum tenetur ducimus

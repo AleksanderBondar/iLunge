@@ -74,64 +74,66 @@ export const AutoCompleteSearch = () => {
                 >
                     <div
                         className={cx(
-                            'scrollbar-thumb-rounded-full h-full w-full overflow-y-auto scrollbar-thin  scrollbar-thumb-[#FF7000]',
+                            'scrollbar-thumb-rounded-full background-light900_dark200 h-full w-full overflow-y-auto scrollbar-thin  scrollbar-thumb-[#FF7000]',
                             !!Object.entries(searchResults).length && 'py-[0.4rem]',
                         )}
                     >
-                        {Object.entries(searchResults).map(([city, val], idx) => {
-                            const haveAddress = val.some(station => station.addressStreet);
-                            const isSelected = selectedStation?.id === val[0].id;
+                        {Object.entries(searchResults)
+                            .sort(([city, val], [city2, val2]) => city.localeCompare(city2))
+                            .map(([city, val], idx) => {
+                                const haveAddress = val.some(station => station.addressStreet);
+                                const isSelected = selectedStation?.id === val[0].id;
 
-                            return (
-                                <div className={cx('flex flex-col')} key={city + idx}>
-                                    <div
-                                        className={cx(
-                                            'text-light-700_dark200 flex  flex-col px-[1.2rem] py-[0.4rem] transition-colors duration-300 ease-in-out',
-                                            !haveAddress && isSelected && 'background-light800_dark300',
-                                            !haveAddress && 'cursor-pointer',
-                                        )}
-                                        onClick={async () => {
-                                            if (!haveAddress) await handleChangeStation(val[0].id, city);
-                                        }}
-                                    >
-                                        <h1
+                                return (
+                                    <div className={cx('flex flex-col')} key={city + idx}>
+                                        <div
                                             className={cx(
-                                                'select-none',
-                                                !haveAddress && isSelected && 'text-white',
-                                                haveAddress && 'cursor-default',
+                                                'text-light-700_dark200 flex  flex-col px-[1.2rem] py-[0.4rem] transition-colors duration-300 ease-in-out',
+                                                !haveAddress && isSelected && 'background-light800_dark300',
+                                                !haveAddress && 'cursor-pointer',
                                             )}
+                                            onClick={async () => {
+                                                if (!haveAddress) await handleChangeStation(val[0].id, city);
+                                            }}
                                         >
-                                            {city}
-                                        </h1>
-                                    </div>
-                                    {haveAddress && (
-                                        <div className="text-light-700_dark200 flex flex-col">
-                                            {val.map((station, _index) =>
-                                                !station?.addressStreet?.includes('bez ulicy') ? (
-                                                    <div
-                                                        key={station.id}
-                                                        className={cx(
-                                                            'hover-light-700_dark-400 flex cursor-pointer flex-col px-[2.4rem] py-[0.4rem] transition-colors duration-300 ease-in-out',
-                                                            selectedStation?.id === station.id &&
-                                                                'background-light800_dark300',
-                                                        )}
-                                                        onClick={async () =>
-                                                            await handleChangeStation(station.id, city)
-                                                        }
-                                                    >
-                                                        <p className="select-none">
-                                                            {val.length > 1
-                                                                ? `${_index + 1} ${station.addressStreet}`
-                                                                : station.addressStreet}
-                                                        </p>
-                                                    </div>
-                                                ) : null,
-                                            )}
+                                            <h1
+                                                className={cx(
+                                                    'select-none',
+                                                    !haveAddress && isSelected && 'text-white',
+                                                    haveAddress && 'cursor-default',
+                                                )}
+                                            >
+                                                {city}
+                                            </h1>
                                         </div>
-                                    )}
-                                </div>
-                            );
-                        })}
+                                        {haveAddress && (
+                                            <div className="text-light-700_dark200 flex flex-col">
+                                                {val.map((station, _index) =>
+                                                    !station?.addressStreet?.includes('bez ulicy') ? (
+                                                        <div
+                                                            key={station.id}
+                                                            className={cx(
+                                                                'hover-light-700_dark-400 flex cursor-pointer flex-col px-[2.4rem] py-[0.4rem] transition-colors duration-300 ease-in-out',
+                                                                selectedStation?.id === station.id &&
+                                                                    'background-light800_dark300',
+                                                            )}
+                                                            onClick={async () =>
+                                                                await handleChangeStation(station.id, city)
+                                                            }
+                                                        >
+                                                            <p className="select-none">
+                                                                {val.length > 1
+                                                                    ? `${_index + 1} ${station.addressStreet}`
+                                                                    : station.addressStreet}
+                                                            </p>
+                                                        </div>
+                                                    ) : null,
+                                                )}
+                                            </div>
+                                        )}
+                                    </div>
+                                );
+                            })}
                     </div>
                 </div>
             </div>

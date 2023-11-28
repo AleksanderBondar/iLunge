@@ -38,11 +38,15 @@ export const Models = () => {
             } else watchMesh.current.position.x = 0;
         }
         if (phoneMesh.current) {
-            if (window.innerWidth <= 1400 && window.innerWidth > 1024) {
-                phoneMesh.current.position.x = 3;
-            } else if (window.innerWidth <= 1024) {
-                phoneMesh.current.position.x = 3;
-            } else phoneMesh.current.position.x = 0;
+            if (window.innerWidth > 1400) {
+                phoneMesh.current.position.x = 0;
+            } else if (window.innerWidth <= 1400 && window.innerWidth > 1024) {
+                phoneMesh.current.position.x = 0.5;
+            } else if (window.innerWidth <= 1024 && window.innerWidth > 640) {
+                phoneMesh.current.position.x = 1.5;
+            }
+            // else if(window.innerWidth <= 640)
+            else phoneMesh.current.position.x = 2.5;
         }
     };
     useEffect(() => {
