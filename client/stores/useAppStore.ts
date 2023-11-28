@@ -17,7 +17,16 @@ type AppStore = {
     airQualities: Record<string, AirQuality> | null;
     airQuality: AirQuality | null;
 
-    initState: (init?: { stations: Stations; airQualities: Record<string, AirQuality> }) => Promise<void>;
+    initState: (init?: {
+        stations: {
+            timestamp: number;
+            stations: Record<string, Station[]>;
+        };
+        airQualities: {
+            timestamp: number;
+            qualities: Record<string, AirQuality>;
+        };
+    }) => Promise<void>;
     setMode: (mode: string) => void;
     selectStation: (id: number | null) => void;
     setSearchValue: (value: string | null) => void;
@@ -26,10 +35,21 @@ type AppStore = {
     checkMode: () => void;
     allowRotation: boolean;
     toggleRotation: () => void;
+    visibility: boolean;
+    toggleVisibility: () => void;
 };
 
 export const useAppStore = create<AppStore>()((set, get) => {
-    const initState = async (init?: { stations: Stations; airQualities: Record<string, AirQuality> }) => {
+    const initState = async (init?: {
+        stations: {
+            timestamp: number;
+            stations: Record<string, Station[]>;
+        };
+        airQualities: {
+            timestamp: number;
+            qualities: Record<string, AirQuality>;
+        };
+    }) => {
         if (
             localStorage.theme === 'dark' ||
             (window.matchMedia('(prefers-color-scheme:dark)').matches && !('theme' in localStorage))
@@ -41,8 +61,8 @@ export const useAppStore = create<AppStore>()((set, get) => {
             document.documentElement.classList.remove('dark');
         }
         try {
-            if (init?.stations) {
-                set({ stations: init.stations, loading: false });
+            if (init?.stations?.stations) {
+                set({ stations: init.stations.stations, loading: false });
             } else {
                 const response = await fetch('/api/stations');
                 const data = await response.json();
@@ -66,7 +86,7 @@ export const useAppStore = create<AppStore>()((set, get) => {
 
         try {
             if (init?.airQualities) {
-                set({ airQualities: init.airQualities });
+                set({ airQualities: init.airQualities.qualities });
             } else {
                 const res = await fetch(`/api/qualities`);
                 const airQualities = (await res.json()) as Record<string, AirQuality>;
@@ -169,6 +189,11 @@ export const useAppStore = create<AppStore>()((set, get) => {
         set({ allowRotation: !allowRotation });
     };
 
+    const toggleVisibility = () => {
+        const { visibility } = get();
+        set({ visibility: !visibility });
+    };
+
     return {
         loading: true,
         stations: {},
@@ -190,5 +215,7 @@ export const useAppStore = create<AppStore>()((set, get) => {
         checkMode,
         allowRotation: false,
         toggleRotation,
+        visibility: true,
+        toggleVisibility,
     };
 });

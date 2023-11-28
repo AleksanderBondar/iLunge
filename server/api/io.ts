@@ -14,6 +14,20 @@ export const IO = (server: Express.Application) => {
             users.set(client.id, { ...userDetails });
             ioLog(`User ${client.id} connected ${Array.from(users.values()).length} users connected`, 'connection');
             client.emit('users', Array.from(users.values()));
+            client.emit(
+                'mousePositions',
+                Array.from(mousePositions.entries()).map(([id, data]) => ({ id, ...data })),
+            );
+        });
+
+        client.on('userRemove', () => {
+            users.delete(client.id);
+            ioLog(`User ${client.id} disconnected ${Array.from(users.values()).length} users connected`, 'connection');
+            client.emit('users', Array.from(users.values()));
+            client.emit(
+                'mousePositions',
+                Array.from(mousePositions.entries()).map(([id, data]) => ({ id, ...data })),
+            );
         });
 
         client.on('disconnect', () => {
@@ -30,18 +44,14 @@ export const IO = (server: Express.Application) => {
 
         client.on('mouseMove', (data: MousePosition) => {
             mousePositions.set(client.id, data);
-            client.emit(
-                'mousePositions',
-                Array.from(mousePositions.entries()).map(([id, data]) => ({ id, ...data })),
-            );
+            const positionsArray = Array.from(mousePositions.entries()).map(([id, data]) => ({ id, ...data }));
+            client.emit('mousePositions', positionsArray);
+            client.broadcast.emit('mousePositions', positionsArray);
         });
 
         client.on('mouseClick', (data: MousePosition) => {
             client.emit('mouseClick', data);
+            client.broadcast.emit('mouseClick', data);
         });
-
-        setInterval(() => {
-            client.emit('users', Array.from(users.values()));
-        }, 1000 * 60);
     });
 };
