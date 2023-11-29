@@ -7,7 +7,7 @@ import { fetcher } from '../utils/fetcher.js';
 import { log } from '../utils/logger.js';
 import { envs } from '../utils/envs.js';
 import { convertAirQuality } from '../utils/converters.js';
-import { OpenAI } from '../utils/openai.js';
+// import { OpenAI } from '../utils/openai.js';
 const { LAST_UPDATE_QUALITY, CACHE_TIME, API_URL } = envs;
 
 export const getQualityByStationID = async (req: Request, res: Response) => {
