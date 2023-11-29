@@ -79,9 +79,9 @@ export const MapHeader = ({ map }: { map: Map }) => {
                     </button>
                 </div>
             </div>
-            {/* <button onClick={close}>
+            <button onClick={close} className="sm:hidden">
                 <Cross className="h-6 w-6" />
-            </button> */}
+            </button>
         </div>
     );
 };
