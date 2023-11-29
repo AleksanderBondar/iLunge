@@ -16,7 +16,28 @@ const vite = await createServer({
 
 API(router);
 
-router.get(`/`, async (req, res, _) => {
+const AB_PREFIX = '__test_';
+
+const doABTesting = (req: express.Request) => {
+    const params = req.query;
+    const abParams = Object.keys(params).filter(key => key.startsWith(AB_PREFIX));
+    if (!abParams.length) return;
+    const abValues = abParams.reduce((acc, key) => {
+        const value = params[key];
+        const feature = key.replace(AB_PREFIX, '');
+        acc[feature as string] = value as string;
+        return acc;
+    }, {} as Record<string, string>);
+
+    return abValues;
+};
+
+//?__test_feature=variant&__test_feature2=variant2
+
+router.get(`/`, async (req, res) => {
+    const AB_Values = doABTesting(req);
+    console.log(AB_Values);
+
     let html = fs.readFileSync('./client/index.html', 'utf-8');
     if (vite) html = await vite.transformIndexHtml(req.url, html);
     const data = await getInitialData(req, '/');
