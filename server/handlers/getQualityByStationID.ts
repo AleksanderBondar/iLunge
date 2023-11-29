@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
 import type { AirQuality } from '../../types/backend';
-import type { AirQuality as AirQualityFront } from '../../types/front';
+// import type { AirQuality as AirQualityFront } from '../../types/front';
 
 import { readFromCache, APICache, writeToCache } from '../utils/cache.js';
 import { fetcher } from '../utils/fetcher.js';
@@ -13,7 +13,7 @@ const { LAST_UPDATE_QUALITY, CACHE_TIME, API_URL } = envs;
 export const getQualityByStationID = async (req: Request, res: Response) => {
     const id = req.params.id;
     const qualityFromCache = await readFromCache<APICache['quality']>('quality');
-    const { analyze } = OpenAI();
+    // const { analyze } = OpenAI();
 
     if (
         qualityFromCache &&
@@ -26,9 +26,9 @@ export const getQualityByStationID = async (req: Request, res: Response) => {
     ) {
         log('Serving qualityFromCache from cache', 'cache');
         const data = { ...qualityFromCache.qualities[id] };
-        const analyzed = await analyze(req, data as unknown as AirQualityFront);
-        console.log(analyzed);
-        res.send({ ...data, analyzed });
+        // const analyzed = await analyze(req, data as unknown as AirQualityFront);
+        // console.log(analyzed);
+        res.send({ ...data });
         return;
     } else {
         const quality = await fetcher<AirQuality>(`${API_URL}/aqindex/getIndex/${id}`);
@@ -51,9 +51,9 @@ export const getQualityByStationID = async (req: Request, res: Response) => {
         }
 
         const data = convertAirQuality({ id: _, ...rest, lastCacheUpdate: Date.now() });
-        const analyzed = await analyze(req, data);
-        console.log(analyzed);
-        res.send({ ...data, analyzed });
+        // const analyzed = await analyze(req, data);
+        // console.log(analyzed);
+        res.send({ ...data });
         return;
     }
 };
