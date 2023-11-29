@@ -15,7 +15,7 @@ function About() {
             {' '}
             <Link
                 to="/"
-                className="text-light-700_dark200 absolute left-6 top-6 z-50 animate-pulse cursor-pointer text-lg"
+                className="text-light-700_dark200 fixed left-6 top-6 z-50 animate-pulse cursor-pointer text-lg"
             >
                 <MoveLeft />
             </Link>
